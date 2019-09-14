@@ -218,16 +218,6 @@ class GoogleMapsProvider with ChangeNotifier {
   void _goToMyLocation() {
     animateCamera(_initialPosition);
   }
-  ///Reposiciona o zoom do mapa no destino
-  void centerMap() {
-    final CameraPosition cameraPosition = CameraPosition(
-      target: _latLngOrigination,
-      tilt: 50.0,
-      bearing: 45.0,
-      zoom: 7.5,
-    );
-    mapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-  }
 
   ///Reposiciona o zoom do mapa no destino
   void goToDestiny() {

@@ -136,7 +136,6 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
 
                 bloc.routing(googleMapsProvider);
 
-                googleMapsProvider.centerMap();
               } else {
                 _scaffoldKey.currentState.showSnackBar(
                   SnackBar(
