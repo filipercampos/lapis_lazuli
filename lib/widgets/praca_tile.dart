@@ -44,20 +44,15 @@ class PracaTile extends StatelessWidget {
                     ),
                     Row(
                       children: <Widget>[
-                        Text(
-                          "Praça: ${praca.nomePraca}",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "KM: ${praca.kmM}",
-                          style: TextStyle(fontSize: 12.0),
-                        ),
-                        SizedBox(
-                          height: 5,
+                        Container(
+                          width: width,
+                          child: Text(
+                            "${praca.nomePraca}",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14.0,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -65,19 +60,20 @@ class PracaTile extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Text(
-                          "UF: ${praca.uf}",
+                          "KM: ${praca.kmM}",
                           style: TextStyle(fontSize: 12.0),
-                        ),
-                        SizedBox(
-                          width: 10,
                         ),
                         Text(
-                          "Telefone: ${StringUtil.formatarTelefone(praca.telefone)}",
+                          " - ${praca.uf}",
                           style: TextStyle(fontSize: 12.0),
-                        )
+                        ),
+
                       ],
                     ),
-
+                    Text(
+                      "Telefone: ${StringUtil.formatarTelefone(praca.telefone)}",
+                      style: TextStyle(fontSize: 12.0),
+                    )
                   ],
                 ),
               ),

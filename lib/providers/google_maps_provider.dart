@@ -204,12 +204,12 @@ class GoogleMapsProvider with ChangeNotifier {
   }
 
   ///Reposiciona o zoom do mapa
-  void animateCamera(LatLng latLng) {
+  void animateCamera(LatLng latLng ) {
     final CameraPosition cameraPosition = CameraPosition(
       target: latLng,
       tilt: 50.0,
       bearing: 45.0,
-      zoom: 10.0,
+      zoom: 9,
     );
     mapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
@@ -217,6 +217,16 @@ class GoogleMapsProvider with ChangeNotifier {
   ///Reposiciona o zoom do mapa na localização atual
   void _goToMyLocation() {
     animateCamera(_initialPosition);
+  }
+  ///Reposiciona o zoom do mapa no destino
+  void centerMap() {
+    final CameraPosition cameraPosition = CameraPosition(
+      target: _latLngOrigination,
+      tilt: 50.0,
+      bearing: 45.0,
+      zoom: 7.5,
+    );
+    mapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
   }
 
   ///Reposiciona o zoom do mapa no destino

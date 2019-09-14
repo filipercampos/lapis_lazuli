@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lapis_lazuli/blocs/route_bloc.dart';
+import 'package:lapis_lazuli/blocs/route_state.dart';
 import 'package:provider/provider.dart';
 import 'package:lapis_lazuli/providers/google_maps_provider.dart';
 import 'package:lapis_lazuli/widgets/google_address_input_field.dart';
@@ -36,6 +37,8 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
     final googleMapsProvider = Provider.of<GoogleMapsProvider>(context);
     double fullSizeHeight = MediaQuery
         .of(context)
@@ -59,16 +62,29 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
       )
           : Stack(
         children: <Widget>[
-          GoogleMap(
-            initialCameraPosition: CameraPosition(
-                target: googleMapsProvider.initialPosition, zoom: 10.0),
-            onMapCreated: googleMapsProvider.onCreated,
-            myLocationEnabled: true,
-            compassEnabled: true,
-            mapType: _currentMapType,
-            markers: googleMapsProvider.markers,
-            onCameraMove: googleMapsProvider.onCameraMove,
-            polylines: googleMapsProvider.polyLines,
+          StreamBuilder<RouteState>(
+              stream: bloc.outState,
+              builder: (context, snapshot) {
+                if( snapshot.data == RouteState.LOADING){
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[700]),
+                      strokeWidth: 1.0,
+                    ),
+                  );
+                }
+              return GoogleMap(
+                initialCameraPosition: CameraPosition(
+                    target: googleMapsProvider.initialPosition, zoom: 10.0),
+                onMapCreated: googleMapsProvider.onCreated,
+                myLocationEnabled: true,
+                compassEnabled: true,
+                mapType: _currentMapType,
+                markers: googleMapsProvider.markers,
+                onCameraMove: googleMapsProvider.onCameraMove,
+                polylines: googleMapsProvider.polyLines,
+              );
+            }
           ),
 
           //Origem
@@ -86,7 +102,9 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
                     bloc.visible();
                   });
                 },
+                backgroundColor: primaryColor,
                 child: Icon(
+
                   Icons.monetization_on,
                   color: Colors.white,
                 ),
@@ -100,6 +118,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(
                 onPressed: _onMapTypeButtonPressed,
+                backgroundColor: primaryColor,
                 child: Icon(
                   Icons.map,
                   color: Colors.white,
@@ -109,32 +128,30 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Theme
-            .of(context)
-            .primaryColor,
-        onPressed: () async {
-          if (googleMapsProvider.isRequest()) {
-            await googleMapsProvider
-                .sendRequest(googleMapsProvider.destinationController.text);
+      floatingActionButton:  FloatingActionButton.extended(
+            backgroundColor: primaryColor,
+            onPressed: () async {
 
-            if(googleMapsProvider.pracas.length>0){
-              bloc.visible();
-            }
-          } else {
-            _scaffoldKey.currentState.showSnackBar(
-              SnackBar(
-                content: Text("Informe origem e destino"),
-              ),
-            );
-          }
-        },
-        label: Text('Ir'),
-        icon: Icon(
-          Icons.directions,
-          size: 24,
-        ),
-      ),
+              if (googleMapsProvider.isRequest()) {
+
+                bloc.routing(googleMapsProvider);
+
+                googleMapsProvider.centerMap();
+              } else {
+                _scaffoldKey.currentState.showSnackBar(
+                  SnackBar(
+                    content: Text("Informe origem e destino"),
+                  ),
+                );
+              }
+            },
+            label: Text('Ir'),
+            icon: Icon(
+              Icons.directions,
+              size: 24,
+            ),
+          ),
+
     );
   }
 

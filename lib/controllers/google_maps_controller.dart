@@ -103,7 +103,7 @@ class GoogleMapsController {
     diff = diff < 0.0 ? diff * -1.0 : diff;
 
     if (diff < 0.009 && diff > 0.00010) {
-      print("lat base ok $diff");
+//      print("lat base ok $diff");
       return true;
     }
     //print("error $diff");

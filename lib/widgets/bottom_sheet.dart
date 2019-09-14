@@ -173,9 +173,9 @@ class InnerList extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.blue[600],
-                  Colors.blueAccent[100],
-                  Colors.blue[600],
+                  Colors.black,
+                  Colors.black54,
+                  Colors.black,
                 ],
               ),
               borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -192,7 +192,9 @@ class InnerList extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: ListView.builder(
+          child:
+          pracas.length > 0 ?
+          ListView.builder(
             itemCount: pracas.length,
             controller: listViewScrollController,
             physics: scrollEnabled
@@ -201,7 +203,7 @@ class InnerList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return PracaTile(pracas[index]);
             },
-          ),
+          ): Center(child:Text("Nenhum pedágio(s)")),
         )
       ],
     );

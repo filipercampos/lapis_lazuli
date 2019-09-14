@@ -3,8 +3,6 @@ import 'package:lapis_lazuli/providers/google_maps_provider.dart';
 import 'package:lapis_lazuli/screens/route/route_map_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'package:lapis_lazuli/widgets/bottom_sheet.dart';
-
 void main() {
   return runApp(MultiProvider(
     providers: [
@@ -21,7 +19,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Maps',
       theme: ThemeData(
-        primarySwatch: Colors.black,
+        primarySwatch: Colors.blue,
+        primaryColor: Colors.black,
+        buttonColor: Colors.black,
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.black,
+        ),
       ),
       home: RouteMapScreen(),
     );
