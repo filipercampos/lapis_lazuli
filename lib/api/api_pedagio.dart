@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:lapis_lazuli/config/app_constants.dart';
 import 'package:lapis_lazuli/model/pagination_model.dart';
@@ -40,21 +39,6 @@ abstract class ApiPedagio {
     //_postHttpClientResponse(resource, body: body);
 
     return HttpUtil.decodeApi(response);
-  }
-  ///https://stackoverflow.com/questions/50278258/http-post-with-json-on-body-flutter-dart
-  _postHttpClientResponse(String resource,
-      {@required Map<String, dynamic> body,
-      Map<String, dynamic> headers}) async {
-    HttpClient httpClient = new HttpClient();
-    HttpClientRequest request =
-        await httpClient.postUrl(Uri.parse(_buildUrl(resource)));
-    //request.headers.set('content-type', 'application/json');
-
-    request.add(utf8.encode(json.encode(body)));
-    HttpClientResponse response = await request.close();
-
-    String reply = await response.transform(utf8.decoder).join();
-    httpClient.close();
   }
 
   putResource(

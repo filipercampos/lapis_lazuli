@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:lapis_lazuli/controllers/praca_pedagio_controller.dart';
 import 'package:location/location.dart';
 import 'package:lapis_lazuli/controllers/google_maps_controller.dart';
 import 'package:lapis_lazuli/model/praca_pedagio.dart';
@@ -251,6 +250,13 @@ class GoogleMapsProvider with ChangeNotifier {
   void zoomInMap() {
     mapController.animateCamera(
       CameraUpdate.zoomIn(),
+    );
+  }
+
+  ///Zoom no mapa
+  void zoomOut() {
+    mapController.animateCamera(
+      CameraUpdate.zoomOut(),
     );
   }
 

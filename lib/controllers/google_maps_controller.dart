@@ -69,33 +69,42 @@ class GoogleMapsController {
             var lat = NumberUtil.toDouble(p.latitude.toStringAsFixed(5));
             var lng = NumberUtil.toDouble(p.longitude.toStringAsFixed(5));
 
-            var diffLat = _rangeLatitude(latBase ,lat);
-            var diffLng = _rangeLatitude(lngBase , lng);
+            var diffLat = _rangeLatitude(latBase, lat);
+            var diffLng = _rangeLatitude(lngBase, lng);
             //latBase.toStringAsFixed(3) == lat.toStringAsFixed(3)
 
             if (diffLat && diffLng) {
               //guarde e atualize a coordenada (evita chamada do google)
               p.latitude = l.latitude;
               p.longitude = l.longitude;
-              pracas.add(p);
+
+              //removendo duplicações de coordenadas
+              if (_isPraca(p, pracas)) {
+                pracas.add(p);
+              }
             }
           },
         );
       },
     );
-    //removendo duplicações de coordenadas
-    var result = List<PracaPedagio>();
-    if (pracas.length > 0) {
-      var praca = pracas[0];
-      result.add(praca);
-      for (int i = 1; i < pracas.length; i++) {
-        var p = pracas[i];
-        if (p.id != praca.id) {
-          result.add(p);
-        }
+
+    return pracas;
+  }
+
+  ///Verifica duplicidade
+  bool _isPraca(PracaPedagio praca, List<PracaPedagio> pracas) {
+    if (pracas.isEmpty) {
+      return true;
+    }
+    //percorre todas as praças procurando duplicidade
+    for (int i = 0; i < pracas.length; i++) {
+      var p = pracas[i];
+      //check pracas ja plotadas
+      if (p.id == praca.id) {
+        return false;
       }
     }
-    return result;
+    return true; //ok
   }
 
   bool _rangeLatitude(lat1, lat2) {

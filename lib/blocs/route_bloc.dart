@@ -13,7 +13,7 @@ class RouteBloc extends BlocBase {
 
   Stream<RouteState> get outState => _stateController.stream;
 
-  RouteState get loginState => _stateController.value;
+  RouteState get routeState => _stateController.value;
 
   RouteBloc() {
     _showController.add(false);
@@ -45,10 +45,12 @@ class RouteBloc extends BlocBase {
       print("Localização inválida");
       print(error);
       _stateController.add(RouteState.FAIL );
-
     }
+  }
 
-
+  void resetState(){
+    _stateController.add(RouteState.IDLE );
+    _showController.add(false);
   }
 
   @override

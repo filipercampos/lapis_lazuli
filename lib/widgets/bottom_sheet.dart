@@ -3,7 +3,7 @@ import 'package:lapis_lazuli/blocs/route_bloc.dart';
 import 'package:lapis_lazuli/model/praca_pedagio.dart';
 import 'package:lapis_lazuli/widgets/praca_tile.dart';
 
-
+// ignore: must_be_immutable
 class BottomWidget extends StatefulWidget {
   final double fullSizeHeight;
   final List<PracaPedagio> pracas;
@@ -169,7 +169,7 @@ class InnerList extends StatelessWidget {
           color: Colors.transparent,
           child: Container(
             height: 2,
-            width: 100,
+            width: 60,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
