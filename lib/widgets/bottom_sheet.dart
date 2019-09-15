@@ -45,7 +45,7 @@ class BottomWidgetState extends State<BottomWidget> {
   @override
   void initState() {
     super.initState();
-    const _persistantBottomSheetHeaderHeight = 50.0;
+    const _persistantBottomSheetHeaderHeight = 20.0;
     heights = [
       _persistantBottomSheetHeaderHeight,
       widget.fullSizeHeight / 2,
@@ -165,7 +165,7 @@ class InnerList extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 10,
-          margin: EdgeInsets.only(top: 8),
+          margin: EdgeInsets.only(top: 5),
           color: Colors.transparent,
           child: Container(
             height: 2,
@@ -182,15 +182,15 @@ class InnerList extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            "Pedágios",
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-        ),
+//        Padding(
+//          padding: const EdgeInsets.all(8.0),
+//          child: Text(
+//            "Pedágios",
+//            style: TextStyle(
+//              color: Theme.of(context).primaryColor,
+//            ),
+//          ),
+//        ),
         Expanded(
           child:
           pracas.length > 0 ?

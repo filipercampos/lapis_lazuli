@@ -57,24 +57,25 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
           : Stack(
               children: <Widget>[
                 StreamBuilder<RouteState>(
-                    stream: bloc.outState,
-                    builder: (context, snapshot) {
-                      if (snapshot.data == RouteState.LOADING) {
-                        return _circularProgress();
-                      }
-                      return GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                            target: googleMapsProvider.initialPosition,
-                            zoom: 10.0),
-                        onMapCreated: googleMapsProvider.onCreated,
-                        myLocationEnabled: true,
-                        compassEnabled: true,
-                        mapType: _currentMapType,
-                        markers: googleMapsProvider.markers,
-                        onCameraMove: googleMapsProvider.onCameraMove,
-                        polylines: googleMapsProvider.polyLines,
-                      );
-                    }),
+                  stream: bloc.outState,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == RouteState.LOADING) {
+                      return _circularProgress();
+                    }
+                    return GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                          target: googleMapsProvider.initialPosition,
+                          zoom: 10.0),
+                      onMapCreated: googleMapsProvider.onCreated,
+                      myLocationEnabled: true,
+                      compassEnabled: true,
+                      mapType: _currentMapType,
+                      markers: googleMapsProvider.markers,
+                      onCameraMove: googleMapsProvider.onCameraMove,
+                      polylines: googleMapsProvider.polyLines,
+                    );
+                  },
+                ),
 
                 //Origem
                 _buildOrigem(googleMapsProvider),
