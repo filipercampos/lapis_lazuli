@@ -47,11 +47,13 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       key: _scaffoldKey,
-      bottomSheet: BottomWidget(
-        fullSizeHeight: maxHeight - 20,
-        pracas: googleMapsProvider.pracas,
-        bloc: bloc,
-      ),
+      bottomSheet: bloc.routeState == RouteState.LOADING
+          ? Container()
+          : BottomWidget(
+              fullSizeHeight: maxHeight - 20,
+              pracas: googleMapsProvider.pracas,
+              bloc: bloc,
+            ),
       body: googleMapsProvider.initialPosition == null
           ? _circularProgress()
           : Stack(
@@ -87,7 +89,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
                 _buildButtonMap(),
               ],
             ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
         onPressed: () async {
           if (bloc.routeState == RouteState.SUCCESS) {
@@ -99,10 +101,8 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
             _showAlert();
           }
         },
-        label: Text('Ir'),
-        icon: Icon(
+        child: Icon(
           Icons.directions,
-          size: 24,
         ),
       ),
     );
@@ -113,8 +113,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
       top: 50.0,
       right: 15.0,
       left: 15.0,
-      child: bloc.routeState == RouteState.LOADING ||
-              bloc.routeState == RouteState.SUCCESS
+      child: bloc.routeState == RouteState.SUCCESS
           ? Container()
           : Container(
               padding: EdgeInsets.only(top: 8, right: 10),
@@ -147,8 +146,7 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
       top: 115.0,
       right: 15.0,
       left: 15.0,
-      child: bloc.routeState == RouteState.LOADING ||
-              bloc.routeState == RouteState.SUCCESS
+      child: bloc.routeState == RouteState.SUCCESS
           ? Container()
           : Container(
               padding: EdgeInsets.only(top: 8, right: 10),
@@ -179,14 +177,13 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
   _buildButtonPedagio() {
     return Positioned(
       bottom: 147,
-      right: 30.0,
+      right: 18.0,
       child: bloc.routeState == RouteState.LOADING ||
               bloc.routeState == RouteState.FAIL
           ? Container()
           : Container(
               alignment: Alignment.bottomRight,
               color: Colors.transparent,
-              height: 50,
               child: FloatingActionButton(
                 onPressed: () {
                   setState(() {
@@ -205,14 +202,13 @@ class _RouteMapScreenState extends State<RouteMapScreen> {
 
   _buildButtonMap() {
     return Positioned(
-      bottom: 85,
-      right: 30.0,
+      bottom: 82,
+      right: 18.0,
       child: bloc.routeState == RouteState.LOADING
           ? Container()
           : Container(
               alignment: Alignment.bottomRight,
               color: Colors.transparent,
-              height: 50,
               child: FloatingActionButton(
                 onPressed: _onMapTypeButtonPressed,
                 backgroundColor: Theme.of(context).primaryColor,
